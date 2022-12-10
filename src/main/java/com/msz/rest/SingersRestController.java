@@ -23,19 +23,21 @@ public class SingersRestController {
     @Autowired
     private SingerService singerService;
 
-
+    //Test
     @GetMapping("/hello")
     public String getHello(){
         return "Hello World from REST app made by my own hands from scratch...";
     }
 
+    //Get List of Singers
     @GetMapping("/singers")
     public List<Singer> getSingers(){
         return singerService.getSingers();
 //        return singerService.getSingers().stream().filter(str -> str.getFirstName().startsWith("K")).collect(Collectors.toList());
     }
 
-    @GetMapping("/singer/{singerId}")
+    //Get one Singer
+    @GetMapping("/singers/{singerId}")
     public Singer getSingers(@PathVariable int singerId){
 
         Singer tempSinger = singerService.getSinger(singerId);
@@ -44,5 +46,19 @@ public class SingersRestController {
         }
         return tempSinger;
     }
+    //Add a Singer
+
+
+    //Update Singer by Id
+    @PutMapping("/singers")
+    public void updateSinger(@RequestBody Singer theSinger){
+        //Check that Singer isn't null
+        if(theSinger == null){
+            throw new SingersNotFoundException("Singer id not foun - "+theSinger.getId());
+        }
+        //Update singer
+        singerService.saveSinger(theSinger);
+    }
+
 
 }

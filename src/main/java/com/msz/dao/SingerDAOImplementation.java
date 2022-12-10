@@ -44,7 +44,8 @@ public class SingerDAOImplementation implements SingersDAO{
 
     @Override
     public void saveSinger(Singer theSinger) {
-
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.update(theSinger);
     }
 
     @Override
