@@ -19,7 +19,6 @@ public class SingerDAOImplementation implements SingersDAO{
 
 
     @Override
-    @Transactional
     public List<Singer> getSingers() {
         // get the current session
         Session currentSession = sessionFactory.getCurrentSession();
@@ -33,19 +32,15 @@ public class SingerDAOImplementation implements SingersDAO{
     }
 
     @Override
-    //@Transactional
     public Singer getSinger(int theId) {
-        Session currentSession = sessionFactory.getCurrentSession();
-
         Singer tempSinger = sessionFactory.getCurrentSession().get(Singer.class,theId);
-
         return tempSinger;
     }
 
     @Override
     public void saveSinger(Singer theSinger) {
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.update(theSinger);
+        currentSession.saveOrUpdate(theSinger);
     }
 
     @Override

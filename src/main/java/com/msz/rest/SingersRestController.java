@@ -33,7 +33,7 @@ public class SingersRestController {
     @GetMapping("/singers")
     public List<Singer> getSingers(){
         return singerService.getSingers();
-//        return singerService.getSingers().stream().filter(str -> str.getFirstName().startsWith("K")).collect(Collectors.toList());
+    //return singerService.getSingers().stream().filter(str -> str.getFirstName().startsWith("K")).collect(Collectors.toList());
     }
 
     //Get one Singer
@@ -47,7 +47,15 @@ public class SingersRestController {
         return tempSinger;
     }
     //Add a Singer
-
+    @PostMapping("/singers")
+    public void addSinger(@RequestBody Singer theSinger){
+        //Check that Singer isn't null
+        if(theSinger == null){
+            throw new SingersNotFoundException("Singer id not foun - "+theSinger.getId());
+        }
+        //Add singer
+        singerService.saveSinger(theSinger);
+    }
 
     //Update Singer by Id
     @PutMapping("/singers")
