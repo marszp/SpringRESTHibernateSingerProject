@@ -24,7 +24,7 @@ import java.util.logging.Logger;
 @EnableWebMvc
 @EnableTransactionManagement    // Enable Hibernate Transactions
 @ComponentScan("com.msz")
-@PropertySource({ "classpath:persistence-mysql.properties" })  // witch property will be load for DB connections
+@PropertySource({ "classpath:persistence-mysql.properties" })  // which property will be load for DB connections
 public class RESTSingersConfiguration {
     @Autowired
     private Environment env;
@@ -34,7 +34,6 @@ public class RESTSingersConfiguration {
 
     @Bean
     public DataSource myDataSource() {
-
         // create connection pool
         ComboPooledDataSource myDataSource = new ComboPooledDataSource();
 
@@ -68,21 +67,17 @@ public class RESTSingersConfiguration {
 
         // set hibernate properties
         Properties props = new Properties();
-
         props.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
         props.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
 
         return props;
     }
 
-
     // need a helper method
     // read environment property and convert to int
-
     private int getIntProperty(String propName) {
 
         String propVal = env.getProperty(propName);
-
         // now convert to int
         int intPropVal = Integer.parseInt(propVal);
 
@@ -92,7 +87,7 @@ public class RESTSingersConfiguration {
     @Bean
     public LocalSessionFactoryBean sessionFactory(){
 
-        // create session factorys
+        // create session factory
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 
         // set the properties

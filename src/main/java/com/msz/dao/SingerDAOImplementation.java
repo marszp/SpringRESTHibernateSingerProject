@@ -13,10 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public class SingerDAOImplementation implements SingersDAO{
 
-    //Use SPRING to AUTOWIRE loclaVariables
     @Autowired
     private SessionFactory sessionFactory;
-
 
     @Override
     public List<Singer> getSingers() {
@@ -45,6 +43,14 @@ public class SingerDAOImplementation implements SingersDAO{
 
     @Override
     public void deleteSinger(int theId) {
+        Session currentSession = sessionFactory.getCurrentSession();
+        Singer singerToDelete = currentSession.get(Singer.class,theId);
+        currentSession.delete(singerToDelete);
 
+        // delete object with primary key
+        //Query theQuery =
+        //currentSession.createQuery("delete from Singer where id=:SingerId");
+        //theQuery.setParameter("SingerId", theId);
+        //theQuery.executeUpdate();
     }
 }
