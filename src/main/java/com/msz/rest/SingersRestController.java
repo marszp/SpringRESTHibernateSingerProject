@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.rmi.StubNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
-
 public class SingersRestController {
 
     List<Singer> tempList = new ArrayList<>();
@@ -33,7 +31,7 @@ public class SingersRestController {
     @GetMapping("/singers")
     public List<Singer> getSingers(){
         return singerService.getSingers();
-    //return singerService.getSingers().stream().filter(str -> str.getFirstName().startsWith("K")).collect(Collectors.toList());
+        //return singerService.getSingers().stream().filter(str -> str.getFirstName().startsWith("K")).collect(Collectors.toList());
     }
 
     //Get one Singer
@@ -62,11 +60,31 @@ public class SingersRestController {
     public void updateSinger(@RequestBody Singer theSinger){
         //Check that Singer isn't null
         if(theSinger == null){
-            throw new SingersNotFoundException("Singer id not foun - "+theSinger.getId());
+            throw new SingersNotFoundException("Singer id not found - "+theSinger.getId());
         }
         //Update singer
         singerService.saveSinger(theSinger);
     }
 
+    //Delete Singers
+    @DeleteMapping("/singers/{theId}")
+    public String deleteSinger(@PathVariable int theId){
+        //First Solution - Works, checks the whole list of customers + stream conversion in if statement
+        /*
+        List<Singer> temppList = getSingers();
+        if((temppList.stream().map(x -> x.getId()).noneMatch(x -> x == theId)) || theId < 0){
+            throw new SingersNotFoundException("Singer id not found - " + theId);
+        }
+        */
+        //Second Solution - Works Too - more efficient = better
+        Singer tempSinger = singerService.getSinger(theId);
+        if(tempSinger == null) {
+            throw new SingersNotFoundException("Singer id not found - "+ theId);
+        }
+
+        //delete singer
+        singerService.deleteSinger(theId);
+        return "Deleted singer " +theId;
+    }
 
 }
