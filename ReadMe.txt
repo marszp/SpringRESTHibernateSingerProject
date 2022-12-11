@@ -16,4 +16,4 @@ What already have been done:
 3. Additional things ToDO:
 - think about more efficient way to connect to DB
 - test and broke project
-- GUI ?
+- Extend GUI -> main page + input fields for "id" and Singer "fields"
