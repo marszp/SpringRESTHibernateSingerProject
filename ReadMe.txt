@@ -15,5 +15,5 @@ What have been done already :
 - created GIT repo and push it
 3. Additional things ToDO:
 - think about more efficient way to connect to DB
-- test and brake project
+- test and break project
 - Extend GUI -> main page + input fields for "id" and Singer "fields"
